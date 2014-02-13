@@ -21,6 +21,10 @@ func TestGetLargeAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	if len(address.Transactions) != 50 {
+		t.Fatalf("tx count not 50")
+	}
+
 	tx, err := address.NextTransaction()
 	if err != nil {
 		t.Fatal(err)
@@ -45,6 +49,9 @@ func TestGetLargeAddress(t *testing.T) {
 	if tx.Hash != largeAddressTxHashFiftyOne {
 		t.Fatalf("tx hash incorrect %s vs %s",
 			tx.Hash, largeAddressTxHashFiftyOne)
+	}
+	if len(address.Transactions) != 50 {
+		t.Fatalf("tx count not 50")
 	}
 }
 
