@@ -36,3 +36,5 @@ func main() {
 	}
 }
 ```
+
+***If you run the tests ensure that you use a dummy set of credentials for wallet_test.go otherwise the test will spend your money.***
