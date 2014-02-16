@@ -14,10 +14,11 @@ const (
 	smallAddress = "1416ArzSr5HGzaTbfQHjkLE5RVBBGw3W13"
 )
 
-func TestGetLargeAddress(t *testing.T) {
+func TestRequestLargeAddress(t *testing.T) {
 	bc := blockchain.New(http.DefaultClient)
-	address, err := bc.GetAddress(largeAddress)
-	if err != nil {
+
+	address := &blockchain.Address{Address: largeAddress}
+	if err := bc.Request(address); err != nil {
 		t.Fatal(err)
 	}
 
@@ -55,10 +56,10 @@ func TestGetLargeAddress(t *testing.T) {
 	}
 }
 
-func TestGetSmallAddress(t *testing.T) {
+func TestRequestSmallAddress(t *testing.T) {
 	bc := blockchain.New(http.DefaultClient)
-	address, err := bc.GetAddress(smallAddress)
-	if err != nil {
+	address := &blockchain.Address{Address: smallAddress}
+	if err := bc.Request(address); err != nil {
 		t.Fatal(err)
 	}
 
