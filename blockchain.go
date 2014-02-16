@@ -69,13 +69,11 @@ func decodeJSON(r io.Reader, v interface{}) error {
 		return err
 	}
 
-	fmt.Printf("Data: %s\n", data)
 	if err := json.Unmarshal(data, v); err != nil {
 		return err
 	}
 
 	// Check for errors.
-	fmt.Printf("Struct: %+v\n", v)
 	errVal := reflect.ValueOf(v).Elem().FieldByName("Error")
 	if errVal.IsValid() && errVal.String() != "" {
 		return errors.New(errVal.String())
