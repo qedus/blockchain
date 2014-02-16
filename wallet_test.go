@@ -34,8 +34,8 @@ func TestNewAddress(t *testing.T) {
 
 func TestSendPayment(t *testing.T) {
 	sp := &blockchain.SendPayment{
-		ToAddress:"1BTCorgHwCg6u2YSAWKgS17qUad6kHmtQW",
-		Amount:1}
+		ToAddress: "1BTCorgHwCg6u2YSAWKgS17qUad6kHmtQW",
+		Amount:    1}
 	if err := bc.Request(sp); err != nil {
 		t.Fatal(err)
 	}

@@ -1,13 +1,13 @@
 package blockchain
 
 import (
-	"reflect"
-	"errors"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"reflect"
 )
 
 const (
@@ -15,11 +15,11 @@ const (
 )
 
 type BlockChain struct {
-	client *http.Client
-	GUID string
-	Password string
+	client         *http.Client
+	GUID           string
+	Password       string
 	SecondPassword string
-	APICode string
+	APICode        string
 }
 
 type Item interface {

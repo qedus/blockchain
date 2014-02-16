@@ -6,8 +6,8 @@ import (
 
 type Block struct {
 	// Request params.
-	Hash             string
-	Index            int64 `json:"block_index"`
+	Hash  string
+	Index int64 `json:"block_index"`
 
 	Version          int64  `json:"ver"`
 	PreviousBlock    string `json:"prev_block"`
@@ -18,7 +18,7 @@ type Block struct {
 	Nonce            int64
 	TransactionCount int64 `json:"n_tx"`
 	Size             int64
-	MainChain        bool  `json:"main_chain"`
+	MainChain        bool `json:"main_chain"`
 	Height           int64
 	ReceivedTime     int64         `json:"received_time"`
 	RelayedBy        string        `json:"relayed_by"`

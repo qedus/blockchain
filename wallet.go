@@ -1,10 +1,10 @@
 package blockchain
 
 import (
-	"strconv"
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
 )
 
 type NewAddress struct {
@@ -56,17 +56,17 @@ func (na *NewAddress) load(bc *BlockChain) error {
 
 type SendPayment struct {
 	//  Request
-	ToAddress string
-	Amount int64
+	ToAddress   string
+	Amount      int64
 	FromAddress string
-	Shared bool
-	Fee int64
-	Note string
+	Shared      bool
+	Fee         int64
+	Note        string
 
 	// Response
-	Message string
+	Message         string
 	TransactionHash string `json:"tx_hash"`
-	Notice string
+	Notice          string
 
 	// Error response
 	Error string
