@@ -1,6 +1,8 @@
 package blockchain
 
 import (
+	"reflect"
+	"errors"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -14,6 +16,10 @@ const (
 
 type BlockChain struct {
 	client *http.Client
+	GUID string
+	Password string
+	SecondPassword string
+	APICode string
 }
 
 type Item interface {
@@ -21,7 +27,7 @@ type Item interface {
 }
 
 func New(c *http.Client) *BlockChain {
-	return &BlockChain{c}
+	return &BlockChain{client: c}
 }
 
 func checkHTTPResponse(r *http.Response) error {
@@ -58,10 +64,22 @@ func (bc *BlockChain) httpGetJSON(url string, v interface{}) error {
 }
 
 func decodeJSON(r io.Reader, v interface{}) error {
-	dec := json.NewDecoder(r)
-
-	if err := dec.Decode(v); err != nil {
+	data, err := ioutil.ReadAll(r)
+	if err != nil {
 		return err
 	}
+
+	fmt.Printf("Data: %s\n", data)
+	if err := json.Unmarshal(data, v); err != nil {
+		return err
+	}
+
+	// Check for errors.
+	fmt.Printf("Struct: %+v\n", v)
+	errVal := reflect.ValueOf(v).Elem().FieldByName("Error")
+	if errVal.IsValid() && errVal.String() != "" {
+		return errors.New(errVal.String())
+	}
+
 	return nil
 }

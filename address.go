@@ -44,11 +44,11 @@ func (a *Address) NextTransaction() (*Transaction, error) {
 	return a.NextTransaction()
 }
 
-func addressURL(hash string, offset, limit int) string {
+func (a *Address) addressURL() string {
 	// sort=1 orders transactions in ascending order
 	return fmt.Sprintf(
 		"%s/address/%s?format=json&sort=1&offset=%d&limit=%d",
-		rootURL, hash, offset, limit)
+		rootURL, a.Address, a.txOffset, a.txLimit)
 }
 
 func (a *Address) load(bc *BlockChain) error {
@@ -56,7 +56,7 @@ func (a *Address) load(bc *BlockChain) error {
 	if a.txLimit == 0 {
 		a.txLimit = transactionLimit
 	}
-	url := addressURL(a.Address, a.txOffset, a.txLimit)
+	url := a.addressURL()
 	if err := bc.httpGetJSON(url, a); err != nil {
 		return err
 	}
