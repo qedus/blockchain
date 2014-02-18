@@ -14,6 +14,11 @@ const (
 	rootURL = "https://blockchain.info"
 )
 
+var (
+	// Used when an iterator has exhausted its supply.
+	IterDone = errors.New("iterator done")
+)
+
 type BlockChain struct {
 	client         *http.Client
 	GUID           string

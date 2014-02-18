@@ -17,7 +17,8 @@ const (
 func TestRequestLargeAddress(t *testing.T) {
 	bc := blockchain.New(http.DefaultClient)
 
-	address := &blockchain.Address{Address: largeAddress}
+	address := &blockchain.Address{Address: largeAddress,
+		TxSortAscending: true}
 	if err := bc.Request(address); err != nil {
 		t.Fatal(err)
 	}
@@ -66,7 +67,7 @@ func TestRequestSmallAddress(t *testing.T) {
 	count := 0
 	for {
 		_, err := address.NextTransaction()
-		if err == blockchain.TransactionsDone {
+		if err == blockchain.IterDone {
 			break
 		} else if err != nil {
 			t.Fatal(err)

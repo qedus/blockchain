@@ -1,14 +1,9 @@
 package blockchain
 
 import (
-	"errors"
 	"fmt"
-)
-
-const (
-	// Number of transactions to limit.
-	// 50 is the maximum the API will allow.
-	transactionLimit = 50
+	"net/url"
+	"strconv"
 )
 
 type Address struct {
@@ -21,13 +16,12 @@ type Address struct {
 	Transactions     []Transaction `json:"txs"`
 
 	// These are used for the NextTransaction iterator.
-	bc         *BlockChain
-	txOffset   int
-	txPosition int
-	txLimit    int
+	bc              *BlockChain
+	txOffset        int
+	txPosition      int
+	txLimit         int
+	TxSortAscending bool
 }
-
-var TransactionsDone = errors.New("transactions done")
 
 func (a *Address) NextTransaction() (*Transaction, error) {
 	if a.txPosition < len(a.Transactions) {
@@ -36,7 +30,7 @@ func (a *Address) NextTransaction() (*Transaction, error) {
 	}
 
 	if len(a.Transactions) < a.txLimit {
-		return nil, TransactionsDone
+		return nil, IterDone
 	}
 	if err := a.load(a.bc); err != nil {
 		return nil, err
@@ -45,22 +39,28 @@ func (a *Address) NextTransaction() (*Transaction, error) {
 }
 
 func (a *Address) addressURL() string {
-	// sort=1 orders transactions in ascending order
-	return fmt.Sprintf(
-		"%s/address/%s?format=json&sort=1&offset=%d&limit=%d",
-		rootURL, a.Address, a.txOffset, a.txLimit)
+	v := url.Values{}
+	v.Set("format", "json")
+	if a.TxSortAscending {
+		v.Set("sort", "1")
+	} else {
+		v.Set("sort", "0")
+	}
+	v.Set("offset", strconv.Itoa(a.txOffset))
+	v.Set("limit", strconv.Itoa(a.txLimit))
+	return fmt.Sprintf("%s/address/%s?%s", rootURL, a.Address, v.Encode())
 }
 
 func (a *Address) load(bc *BlockChain) error {
 	a.bc = bc
 	if a.txLimit == 0 {
-		a.txLimit = transactionLimit
+		a.txLimit = maxTransactionLimit
 	}
 	url := a.addressURL()
 	if err := bc.httpGetJSON(url, a); err != nil {
 		return err
 	}
-	a.txOffset = a.txOffset + transactionLimit
+	a.txOffset = a.txOffset + a.txLimit
 	a.txPosition = 0
 	return nil
 }
