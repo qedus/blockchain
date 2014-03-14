@@ -44,7 +44,8 @@ func checkHTTPResponse(r *http.Response) error {
 	if err != nil {
 		return err
 	}
-	return fmt.Errorf("%s: %.30q...", r.Status, bodyErr)
+	return fmt.Errorf("%s: %s: %.30q...", 
+		r.Request.URL, r.Status, bodyErr)
 }
 
 func (bc *BlockChain) Request(item Item) error {
