@@ -69,7 +69,7 @@ func (b *LatestBlock) load(bc *BlockChain) error {
 
 type BlockHeight struct {
 	Height int64 `json:"-"`
-	Blocks []Block
+	Blocks []*Block
 }
 
 func blockHeightURL(height int64) string {

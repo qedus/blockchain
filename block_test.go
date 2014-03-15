@@ -44,7 +44,8 @@ func TestRequestLatestBlock(t *testing.T) {
 	}
 
 	if time.Unix(block.Time, 0).Before(time.Now().Add(-30 * time.Minute)) {
-		t.Fatal("latest block too old")
+		t.Fatalf("latest block too old at %s minutes and now is %s",
+			time.Unix(block.Time, 0), time.Now())
 	}
 
 	if len(block.TransactionIndexes) < 1 {

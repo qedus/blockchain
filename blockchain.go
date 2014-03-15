@@ -44,7 +44,7 @@ func checkHTTPResponse(r *http.Response) error {
 	if err != nil {
 		return err
 	}
-	return fmt.Errorf("%s: %s: %.30q...", 
+	return fmt.Errorf("%s: %s: %.30q...",
 		r.Request.URL, r.Status, bodyErr)
 }
 

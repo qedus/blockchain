@@ -32,7 +32,7 @@ func TestRequestLargeAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 	if tx.Hash != largeAddressTxHashOne {
-		t.Fatalf("tx hash incorrect %s vs %s",
+		t.Fatalf("tx hash incorrect %s but should be %s",
 			tx.Hash, largeAddressTxHashOne)
 	}
 
@@ -49,7 +49,7 @@ func TestRequestLargeAddress(t *testing.T) {
 		t.Fatal(err)
 	}
 	if tx.Hash != largeAddressTxHashFiftyOne {
-		t.Fatalf("tx hash incorrect %s vs %s",
+		t.Fatalf("tx hash incorrect %s but should be %s",
 			tx.Hash, largeAddressTxHashFiftyOne)
 	}
 	if len(address.Transactions) != 50 {
