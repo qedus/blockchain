@@ -1,6 +1,7 @@
 package blockchain
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -74,6 +75,11 @@ func decodeJSON(r io.Reader, v interface{}) error {
 	if err != nil {
 		return err
 	}
+
+	// Fixes a bug where the blockchain.info api can spit out empty hashes
+	// when it should produce no hashes, for example in a coinbase
+	// transaction. Possible optimisation by replacing "{}" as r is read.
+	data = bytes.Replace(data, []byte("{}"), []byte(""), -1)
 
 	if err := json.Unmarshal(data, v); err != nil {
 		return err

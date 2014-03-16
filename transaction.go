@@ -47,11 +47,8 @@ type Transaction struct {
 	Version          int64 `json:"ver"`
 }
 
-// Blockchain.info API has a bug whereby they produce an empty hash "{}" for no
-// inputs, i.e. the coinbase transaction, instead of producing no hash.
 func (t *Transaction) IsCoinbase() bool {
-	return (len(t.Inputs) == 1 && t.Inputs[0] == (Input{})) ||
-		len(t.Inputs) == 0
+	return len(t.Inputs) == 0
 }
 
 type UnconfirmedTransactions struct {
