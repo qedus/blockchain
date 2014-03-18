@@ -55,9 +55,11 @@ func (na *NewAddress) load(bc *BlockChain) error {
 }
 
 type SendPayment struct {
-	//  Request
-	ToAddress   string
-	Amount      int64
+	//  Required request parameters.
+	ToAddress string
+	Amount    int64
+
+	// Optional request parameters.
 	FromAddress string
 	Shared      bool
 	Fee         int64

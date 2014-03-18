@@ -82,7 +82,7 @@ func decodeJSON(r io.Reader, v interface{}) error {
 	data = bytes.Replace(data, []byte("{}"), []byte(""), -1)
 
 	if err := json.Unmarshal(data, v); err != nil {
-		return err
+		return fmt.Errorf("%s with data %.30q...", err.Error(), data)
 	}
 
 	// Check for errors.
