@@ -53,3 +53,45 @@ func TestTransactionFee(t *testing.T) {
 			feeSum, b.Fee)
 	}
 }
+
+func TestTransactionHash(t *testing.T) {
+	bc := blockchain.New(http.DefaultClient)
+	tx := &blockchain.Transaction{
+		Hash: "2355913fc1a3d71efbc228c69dc5d74340e07b9012377b4b9f6d5522116d0509"}
+	if err := bc.Request(tx); err != nil {
+		t.Fatal(err)
+	}
+
+	if len(tx.Inputs) != 14 {
+		t.Fatal("should be 14 inputs")
+	}
+
+	if len(tx.Outputs) != 1 {
+		t.Fatal("should be 1 output")
+	}
+
+	if tx.Index != 30187542 {
+		t.Fatalf("incorrect index for transaction (%d)", tx.Index)
+	}
+}
+
+func TestTransactionIndex(t *testing.T) {
+	bc := blockchain.New(http.DefaultClient)
+	tx := &blockchain.Transaction{Index: 30187542}
+
+	if err := bc.Request(tx); err != nil {
+		t.Fatal(err)
+	}
+
+	if len(tx.Inputs) != 14 {
+		t.Fatal("should be 14 inputs")
+	}
+
+	if len(tx.Outputs) != 1 {
+		t.Fatal("should be 1 output")
+	}
+
+	if tx.Index != 30187542 {
+		t.Fatalf("incorrect index for transaction (%d)", tx.Index)
+	}
+}

@@ -33,18 +33,21 @@ type Output struct {
 }
 
 type Transaction struct {
-	Hash             string
-	Inputs           []Input
-	InputCount       int64    `json:"vin_sz"`
-	Outputs          []Output `json:"out"`
-	OutputCount      int64    `json:"vout_sz"`
-	RelayedBy        string   `json:"relayed_by"`
-	Result           int64
-	Size             int64
-	Time             int64
-	BlockHeight      int64 `json:"block_height"`
-	TransactionIndex int64 `json:"tx_index"`
-	Version          int64 `json:"ver"`
+	// Required request parameters.
+	// Either Hash or TransactionIndex are required.
+	Hash  string
+	Index int64 `json:"tx_index"`
+
+	Inputs      []Input
+	InputCount  int64    `json:"vin_sz"`
+	Outputs     []Output `json:"out"`
+	OutputCount int64    `json:"vout_sz"`
+	RelayedBy   string   `json:"relayed_by"`
+	Result      int64
+	Size        int64
+	Time        int64
+	BlockHeight int64 `json:"block_height"`
+	Version     int64 `json:"ver"`
 }
 
 func (t *Transaction) IsCoinbase() bool {
@@ -66,6 +69,24 @@ func (t *Transaction) Fee() int64 {
 		outputSum = outputSum + output.Value
 	}
 	return inputSum - outputSum
+}
+
+func transactionHashURL(hash string) string {
+	return fmt.Sprintf("%s/rawtx/%s", rootURL, hash)
+}
+
+func transactionIndexURL(index int64) string {
+	return fmt.Sprintf("%s/rawtx/%d", rootURL, index)
+}
+
+func (t *Transaction) load(bc *BlockChain) error {
+	url := ""
+	if t.Hash != "" {
+		url = transactionHashURL(t.Hash)
+	} else {
+		url = transactionIndexURL(t.Index)
+	}
+	return bc.httpGetJSON(url, t)
 }
 
 type UnconfirmedTransactions struct {
