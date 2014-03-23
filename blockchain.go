@@ -64,10 +64,7 @@ func (bc *BlockChain) httpGetJSON(url string, v interface{}) error {
 	}
 
 	defer resp.Body.Close()
-	if err := decodeJSON(resp.Body, v); err != nil {
-		return err
-	}
-	return nil
+	return decodeJSON(resp.Body, v)
 }
 
 func decodeJSON(r io.Reader, v interface{}) error {

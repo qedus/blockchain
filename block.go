@@ -40,11 +40,7 @@ func (b *Block) load(bc *BlockChain) error {
 	} else {
 		url = blockIndexURL(b.Index)
 	}
-
-	if err := bc.httpGetJSON(url, b); err != nil {
-		return err
-	}
-	return nil
+	return bc.httpGetJSON(url, b)
 }
 
 type LatestBlock struct {
@@ -61,10 +57,7 @@ func latestBlockURL() string {
 
 func (b *LatestBlock) load(bc *BlockChain) error {
 	url := latestBlockURL()
-	if err := bc.httpGetJSON(url, b); err != nil {
-		return err
-	}
-	return nil
+	return bc.httpGetJSON(url, b)
 }
 
 type BlockHeight struct {
@@ -78,8 +71,5 @@ func blockHeightURL(height int64) string {
 
 func (bh *BlockHeight) load(bc *BlockChain) error {
 	url := blockHeightURL(bh.Height)
-	if err := bc.httpGetJSON(url, bh); err != nil {
-		return err
-	}
-	return nil
+	return bc.httpGetJSON(url, bh)
 }

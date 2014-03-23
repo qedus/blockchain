@@ -48,10 +48,7 @@ func (na *NewAddress) load(bc *BlockChain) error {
 	if err != nil {
 		return err
 	}
-	if err := bc.httpGetJSON(url, na); err != nil {
-		return err
-	}
-	return nil
+	return bc.httpGetJSON(url, na)
 }
 
 type SendPayment struct {
@@ -118,8 +115,5 @@ func (sp *SendPayment) load(bc *BlockChain) error {
 	if err != nil {
 		return err
 	}
-	if err := bc.httpGetJSON(url, sp); err != nil {
-		return err
-	}
-	return nil
+	return bc.httpGetJSON(url, sp)
 }
