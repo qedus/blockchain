@@ -51,6 +51,23 @@ func (t *Transaction) IsCoinbase() bool {
 	return len(t.Inputs) == 0
 }
 
+func (t *Transaction) Fee() int64 {
+	if t.IsCoinbase() {
+		return 0
+	}
+
+	inputSum := int64(0)
+	for _, input := range t.Inputs {
+		inputSum = inputSum + input.PrevOut.Value
+	}
+
+	outputSum := int64(0)
+	for _, output := range t.Outputs {
+		outputSum = outputSum + output.Value
+	}
+	return inputSum - outputSum
+}
+
 type UnconfirmedTransactions struct {
 	Transactions []Transaction `json:"txs"`
 

@@ -35,3 +35,21 @@ func TestUnconfirmedTransactions(t *testing.T) {
 	}
 	t.Logf("%d unconfirmed transactions", count)
 }
+
+func TestTransactionFee(t *testing.T) {
+	bc := blockchain.New(http.DefaultClient)
+	b := &blockchain.Block{Index: 312373}
+	if err := bc.Request(b); err != nil {
+		t.Fatal(err)
+	}
+
+	feeSum := int64(0)
+	for _, tx := range b.Transactions {
+		feeSum = feeSum + tx.Fee()
+	}
+
+	if feeSum != b.Fee {
+		t.Fatalf("fees do not tally feeSum (%d) vs b.Fee (%d)",
+			feeSum, b.Fee)
+	}
+}
