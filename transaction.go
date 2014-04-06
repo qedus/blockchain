@@ -51,7 +51,7 @@ type Transaction struct {
 }
 
 func (t *Transaction) IsCoinbase() bool {
-	return len(t.Inputs) == 0
+	return len(t.Inputs) == 1 && t.Inputs[0] == (Input{})
 }
 
 func (t *Transaction) Fee() int64 {

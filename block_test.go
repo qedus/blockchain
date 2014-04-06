@@ -34,12 +34,8 @@ func TestRequestBlock(t *testing.T) {
 		t.Fatal("first transaction hash incorrect")
 	}
 
-	// This checks the bug has been fixed where coinbase transactions have
-	// an empty hash instead of no hash. See bytes.Replace(...) in
-	// blockchain.go.
-	if len(block.Transactions[0].Inputs) != 0 {
-		t.Fatalf("no inputs expected but there are %d",
-			len(block.Transactions[0].Inputs))
+	if !block.Transactions[0].IsCoinbase() {
+		t.Fatal("not coinbase transaction")
 	}
 }
 
