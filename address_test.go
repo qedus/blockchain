@@ -8,8 +8,8 @@ import (
 
 const (
 	largeAddress               = "1dice8EMZmqKvrGE4Qc9bUFf9PX3xaYDp"
-	largeAddressTxHashOne      = "a0a87b1577d606b349cfded85c842bdc53b99bcd49614229a71804b46b1c27cc"
-	largeAddressTxHashFiftyOne = "195ad7c67887bb4b03cea7398f70dc36b9574c80a2d46382e557000a52f1a65e"
+	largeAddressTxHashOne      = "598af2a2f8eada73ed7262dfb6d6f99970096a4193fdd8043729d01b03423091"
+	largeAddressTxHashFiftyOne = "bc6a0683001e38a3c78e3493c5447ff4a21e26367836034aeb9b9910e3cd437e"
 
 	smallAddress = "1416ArzSr5HGzaTbfQHjkLE5RVBBGw3W13"
 )

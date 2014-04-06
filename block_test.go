@@ -68,15 +68,18 @@ func TestRequestBlockHeight(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if len(bh.Blocks) != 2 {
-		t.Fatal("should be two blocks")
-	}
+	/* It appears that Blockchain.info has fogotten which blocks were previously
+	       orphan blocks. Therefore this test no longer works.
+		if len(bh.Blocks) != 2 {
+			t.Fatal("should be two blocks")
+		}
+
+		if bh.Blocks[1].MainChain {
+			t.Fatal("this block should not on the main chain")
+		}
+	*/
 
 	if !bh.Blocks[0].MainChain {
 		t.Fatal("this block should be on the main chain")
-	}
-
-	if bh.Blocks[1].MainChain {
-		t.Fatal("this block should not on the main chain")
 	}
 }
