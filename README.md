@@ -47,7 +47,7 @@ The consequence of this is you cannot use `len(tx.Inputs) == 0` to determine if 
 ### Transaction input and output counts not always correct
 Take transaction `2355913fc1a3d71efbc228c69dc5d74340e07b9012377b4b9f6d5522116d0509` in [block 312373](https://blockchain.info/block/312373?format=json) for example. The JSON says there are 14 inputs (`vin_sz=14`) when in fact it only lists 4 in `inputs=[...]`. Therefore `tx.InputCount` and `tx.OutputCount` do not always match `len(tx.Inputs)` and `len(tx.Outputs)`. However if you select the [transaction individually](https://blockchain.info/rawtx/2355913fc1a3d71efbc228c69dc5d74340e07b9012377b4b9f6d5522116d0509) the correct number of inputs are listed in `inputs=[...]`.
 
-It appears that the block API consolidates inputs with the same address where as the individual transaction API does not. this does not appear to be documented. I therefore advise that if you want to iterate through all transaction inputs and outputs you do not rely on `tx.InputCount` or `tx.OutputCount` but instead use `len(tx.Inputs)` and `len(tx.Outputs)` or their `:= range ...` equivalents.
+It appears that the block API consolidates inputs with the same address where as the individual transaction API does not. This does not appear to be documented. I therefore advise that if you want to iterate through all transaction inputs and outputs you do not rely on `tx.InputCount` or `tx.OutputCount` but instead use `len(tx.Inputs)` and `len(tx.Outputs)` or their `:= range ...` equivalents.
 
 ```go
     // Do NOT do this.
