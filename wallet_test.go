@@ -40,3 +40,18 @@ func TestSendPayment(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestAddressList(t *testing.T) {
+	al := &blockchain.AddressList{}
+	if err := bc.Request(al); err != nil {
+		t.Fatal(err)
+	}
+
+	if len(al.Addresses) == 0 {
+		t.Fatal("no addresses in AddressList")
+	}
+
+	if al.Addresses[0].Address == "" {
+		t.Fatal("address empty in AddressList")
+	}
+}

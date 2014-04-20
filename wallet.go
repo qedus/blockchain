@@ -117,3 +117,44 @@ func (sp *SendPayment) load(bc *BlockChain) error {
 	}
 	return bc.httpGetJSON(url, sp)
 }
+
+type AddressList struct {
+	// Optional request parameter
+	Confirmations int
+
+	Addresses []struct {
+		Balance       int64
+		Address       string
+		Label         string
+		TotalReceived int64 `json:"total_received"`
+	}
+}
+
+func (al *AddressList) addressListURL(bc *BlockChain) (string, error) {
+	if bc.GUID == "" {
+		return "", errors.New("BlockChain.GUID not set")
+	}
+	if bc.Password == "" {
+		return "", errors.New("BlockChain.Password not set")
+	}
+
+	v := url.Values{}
+	v.Set("password", bc.Password)
+
+	if bc.APICode == "" {
+		v.Set("api_code", bc.APICode)
+	}
+
+	v.Set("confirmations", strconv.Itoa(al.Confirmations))
+
+	return fmt.Sprintf("%s/merchant/%s/list?%s",
+		rootURL, bc.GUID, v.Encode()), nil
+}
+
+func (al *AddressList) load(bc *BlockChain) error {
+	url, err := al.addressListURL(bc)
+	if err != nil {
+		return err
+	}
+	return bc.httpGetJSON(url, al)
+}
