@@ -2,6 +2,8 @@
 
 [Blockchain.info API](https://blockchain.info/api) Go interface.
 
+[GoDoc](http://godoc.org/github.com/qedus/blockchain) documentation is available here.
+
 Check the test files for example use. However it is along the lines of:
 
 ```go
