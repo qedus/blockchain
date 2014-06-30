@@ -99,17 +99,18 @@ type UnconfirmedTransactions struct {
 	txLimit    int
 }
 
-func (uc *UnconfirmedTransactions) NextTransaction() (*Transaction, error) {
+func (uc *UnconfirmedTransactions) NextTransaction() (Transaction, error) {
 	if uc.txPosition < len(uc.Transactions) {
 		uc.txPosition = uc.txPosition + 1
-		return &uc.Transactions[uc.txPosition-1], nil
+		return uc.Transactions[uc.txPosition-1], nil
 	}
 
 	if len(uc.Transactions) < uc.txLimit {
-		return nil, IterDone
+		return Transaction{}, IterDone
 	}
+	uc.Transactions = nil
 	if err := uc.load(uc.bc); err != nil {
-		return nil, err
+		return Transaction{}, err
 	}
 	return uc.NextTransaction()
 }

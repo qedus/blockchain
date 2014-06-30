@@ -23,17 +23,18 @@ type Address struct {
 	TxSortAscending bool
 }
 
-func (a *Address) NextTransaction() (*Transaction, error) {
+func (a *Address) NextTransaction() (Transaction, error) {
 	if a.txPosition < len(a.Transactions) {
 		a.txPosition = a.txPosition + 1
-		return &a.Transactions[a.txPosition-1], nil
+		return a.Transactions[a.txPosition-1], nil
 	}
 
 	if len(a.Transactions) < a.txLimit {
-		return nil, IterDone
+		return Transaction{}, IterDone
 	}
+	a.Transactions = nil
 	if err := a.load(a.bc); err != nil {
-		return nil, err
+		return Transaction{}, err
 	}
 	return a.NextTransaction()
 }
