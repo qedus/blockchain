@@ -1,10 +1,11 @@
 package blockchain_test
 
 import (
-	"github.com/qedus/blockchain"
 	"net/http"
 	"testing"
 	"time"
+
+	"github.com/qedus/blockchain"
 )
 
 const (
