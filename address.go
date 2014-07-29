@@ -20,7 +20,7 @@ type Address struct {
 	txOffset        int
 	txPosition      int
 	txLimit         int
-	TxSortAscending bool
+	TxSortDescending bool
 }
 
 func (a *Address) NextTransaction() (Transaction, error) {
@@ -42,10 +42,10 @@ func (a *Address) NextTransaction() (Transaction, error) {
 func (a *Address) addressURL() string {
 	v := url.Values{}
 	v.Set("format", "json")
-	if a.TxSortAscending {
-		v.Set("sort", "1")
-	} else {
+	if a.TxSortDescending {
 		v.Set("sort", "0")
+	} else {
+		v.Set("sort", "1")
 	}
 	v.Set("offset", strconv.Itoa(a.txOffset))
 	v.Set("limit", strconv.Itoa(a.txLimit))
