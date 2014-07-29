@@ -7,6 +7,10 @@ import (
 	"strconv"
 )
 
+// NewAddress allows you to create a new address in your blockchain.info
+// wallet. The Label parameter is optional and if set will label the new
+// address. The struct is passed to Request and Address and/or Error parameters
+// are populated when Request returns.
 type NewAddress struct {
 	// Optional request parameter
 	Label string
@@ -51,6 +55,10 @@ func (na *NewAddress) load(bc *BlockChain) error {
 	return bc.httpGetJSON(url, na)
 }
 
+// SendPayment struct allows you to send a payment from a blockchain.info
+// wallet. ToAddress and Amount are required parameters. FromAddress, Shared
+// Fee and Note are optional parameters. Check parameter Error for error
+// respnoses from the blockchain.info wallet.
 type SendPayment struct {
 	//  Required request parameters.
 	ToAddress string

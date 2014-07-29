@@ -16,10 +16,10 @@ type Address struct {
 	Transactions     []Transaction `json:"txs"`
 
 	// These are used for the NextTransaction iterator.
-	bc              *BlockChain
-	txOffset        int
-	txPosition      int
-	txLimit         int
+	bc               *BlockChain
+	txOffset         int
+	txPosition       int
+	txLimit          int
 	TxSortDescending bool
 }
 
