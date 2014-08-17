@@ -19,7 +19,7 @@ func TestRequestLargeAddress(t *testing.T) {
 	bc := blockchain.New(http.DefaultClient)
 
 	address := &blockchain.Address{Address: largeAddress,
-		TxSortAscending: true}
+		TxSortDescending: false}
 	if err := bc.Request(address); err != nil {
 		t.Fatal(err)
 	}
